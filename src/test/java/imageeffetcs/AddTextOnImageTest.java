@@ -18,8 +18,8 @@ class AddTextOnImageTest {
     void addTextOnImage() throws IOException {
 
         File input = new File("src/test/java/encoder/filestests/1.jpg");
-        File output = new File("src/test/java/encoder/filestests/test.jpg");
-        AddTextOnImage imageModif = new AddTextOnImage("test", input, output);
-        imageModif.addTextOnImage();
+        File output = new File("src/test/java/encoder/filestests/test2.jpg");
+        AddTextOnImage imageModif = new AddTextOnImage(input, output);
+        imageModif.addTextOnImage("test");
     }
 }
