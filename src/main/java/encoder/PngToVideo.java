@@ -6,20 +6,21 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 
 public class PngToVideo {
 
     private final File output;
-    private final String[] imagesFiles;
+    private final List<BufferedImage> imagesFiles;
     private final int fps;
 
-    public PngToVideo(@NotNull File output, @NotNull String[] imagesFiles) {
+    public PngToVideo(@NotNull File output, @NotNull List<BufferedImage> imagesFiles) {
         this.output = output;
         this.imagesFiles = imagesFiles;
         this.fps = EncoderConfig.DEFAULT_FPS;
     }
-    public PngToVideo(@NotNull File output, @NotNull String[] imagesFiles, @NotNull int fps) {
+    public PngToVideo(@NotNull File output, @NotNull List<BufferedImage> imagesFiles, @NotNull int fps) {
         this.output = output;
         this.imagesFiles = imagesFiles;
         this.fps = fps;
@@ -35,12 +36,12 @@ public class PngToVideo {
             if (verifyImagesFilesNotEmpty() && verifySizeImages()) {
                 AWTSequenceEncoder encoder = AWTSequenceEncoder.createSequenceEncoder(output, fps);
 
-                for (int i = 0; i < imagesFiles.length; i++) {
-                    for (int u = 1; u <= fps; u++) {
-                        BufferedImage image = ImageIO.read(new File(imagesFiles[i]));
-                        encoder.encodeImage(image);
-                        System.out.println(u);
-                    }
+                for (int i = 0; i < imagesFiles.size(); i++) {
+                    //for (int u = 1; u <= fps; u++) {
+                    BufferedImage image = imagesFiles.get(i);
+                    encoder.encodeImage(image);
+                    System.out.println(i);
+                    //}
                 }
 
                 encoder.finish();
@@ -60,14 +61,14 @@ public class PngToVideo {
      */
     private boolean verifySizeImages() throws IOException {
 
-        BufferedImage lastBufferedImage = ImageIO.read(new File(imagesFiles[0]));
+        BufferedImage lastBufferedImage = imagesFiles.get(0);
 
-        for (String localImg : imagesFiles) {
-            BufferedImage bufferedImage = ImageIO.read(new File(localImg));
-            if (lastBufferedImage.getWidth() != bufferedImage.getWidth() || lastBufferedImage.getHeight() != bufferedImage.getHeight()) {
+        for (BufferedImage localImg : imagesFiles) {
+
+            if (lastBufferedImage.getWidth() != localImg.getWidth() || lastBufferedImage.getHeight() != localImg.getHeight()) {
                 throw new IllegalArgumentException("The pictures needs to have the same size. The picture " + localImg + " don't have the same size that the others");
             }
-            lastBufferedImage = bufferedImage;
+            lastBufferedImage = localImg;
         }
         return true;
     }
@@ -77,7 +78,7 @@ public class PngToVideo {
      * @throws IllegalArgumentException if the array is empty
      */
     private boolean verifyImagesFilesNotEmpty() {
-        if (imagesFiles.length == 0) {
+        if (imagesFiles.size() == 0) {
             throw new IllegalArgumentException("Impossible to create a video with any elements in the input array (list of urls)");
         }
         return true;

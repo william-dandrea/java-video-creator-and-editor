@@ -11,7 +11,7 @@ public class OurImage {
 
 
 
-    BufferedImage addRectangleOnImage(BufferedImage inputImg, Position upperLeft, Position lowerRight, Color color, float gamma) {
+    public BufferedImage addRectangleOnImage(BufferedImage inputImg, Position upperLeft, Position lowerRight, Color color, float gamma) {
 
         Graphics2D workspace = (Graphics2D) inputImg.getGraphics();
 
