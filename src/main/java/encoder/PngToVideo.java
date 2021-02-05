@@ -36,6 +36,7 @@ public class PngToVideo {
             if (verifyImagesFilesNotEmpty() && verifySizeImages()) {
                 AWTSequenceEncoder encoder = AWTSequenceEncoder.createSequenceEncoder(output, fps);
 
+
                 for (int i = 0; i < imagesFiles.size(); i++) {
                     //for (int u = 1; u <= fps; u++) {
                     BufferedImage image = imagesFiles.get(i);

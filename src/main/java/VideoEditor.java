@@ -11,11 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VideoEditor {
-    
-    
-    
-    
-    
 
     public static void main(String[] args) throws IOException {
         System.out.println("Welcome in this project !");
@@ -32,13 +27,13 @@ public class VideoEditor {
 
             BufferedImage inputImg = new BufferedImage(1000, 1500, BufferedImage.TYPE_INT_ARGB);
             inputImg = ourImage.addRectangleOnImage(inputImg, new Position(0, 0), new Position(1000, 1500), Color.WHITE, 1.0f);
-            inputImg = ourImage.addRectangleOnImage(inputImg, new Position(200, i*2), new Position(800, i*4), Color.GRAY, 1.0f);
+            inputImg = ourImage.addRectangleOnImage(inputImg, new Position(200, i*2), new Position(800, i*2 + 200), Color.GRAY, 1.0f);
             listOfImages.add(inputImg);
             System.out.println(i);
         }
         System.out.println(listOfImages.toString());
         
-        PngToVideo vdo = new PngToVideo(output, listOfImages, 25);
+        PngToVideo vdo = new PngToVideo(output, listOfImages, 30);
         vdo.encode();
     }
 }
